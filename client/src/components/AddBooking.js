@@ -9,25 +9,40 @@ const AddBooking = ({addBooking}) => {
         checked_in: "",
     })
 
+    const [hasErrors, setHasErrors] = useState(false)
+
     const onChange = (e) =>{
         const newFormData = Object.assign({}, formData); 
         newFormData[e.target.name] = e.target.value;
         setFormData(newFormData);
     }
+
+    const valid = () => {
+        return formData.name && formData.email
+    }
+
     const onSubmit = (e) =>{
         e.preventDefault();
-        addBooking(formData)
-        // Reset the form input Values
-        setFormData({
-            name: "",
-            email: "",
-            checked_in: "",  
-        });
+        if (valid()) {
+            addBooking(formData)
+            // Reset the form input Values
+            setFormData({
+                name: "",
+                email: "",
+                checked_in: "",  
+            });
+            setHasErrors(false)
+        } else {
+            setHasErrors(true)
+        } 
     }
     
-    return ( 
+    return (
         <form onSubmit={onSubmit} id="bookings-form" >
         <h2>Add a Booking</h2>
+        {hasErrors && (
+            <div>Please fill in all fields!</div>
+        )}
         <div className="formWrap">
             <label htmlFor="name">Name:</label>
             <input 
