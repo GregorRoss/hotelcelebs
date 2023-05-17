@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-const EditBooking = (handleBookingUpdate, bookingToEdit, handleEditClicked) => {
+const EditBooking = ({bookingToEdit, handleBookingUpdate, handleEditClicked}) => {
 
     const [formData, setFormData] = useState({
         name: bookingToEdit.name,
