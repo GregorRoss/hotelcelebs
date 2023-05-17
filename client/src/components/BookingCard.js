@@ -1,11 +1,15 @@
 import { deleteBooking } from "../containers/BookingService";
 
-const BookingCard = ({booking, removeBooking}) => {
+const BookingCard = ({booking, removeBooking, handleEditClicked}) => {
 
     const handleDelete = () => {
         deleteBooking(booking._id).then(()=>{
             removeBooking(booking._id);
         })
+    }
+
+    const handleEdit = () => {
+        handleEditClicked(booking)
     }
 
 
@@ -15,6 +19,7 @@ const BookingCard = ({booking, removeBooking}) => {
         <p>Email: {booking.email}</p>
         <p>Checked in?: {booking.checked_in}</p>
         <button onClick={handleDelete}> 🗑 </button>
+        <button onClick={handleEdit}> Edit </button>
         <hr></hr>
     </>
 
