@@ -1,9 +1,63 @@
-import React from 'react';
+import {useState} from 'react';
+import { postBooking } from '../containers/BookingService';
 
-const AddBooking = () => {
+const AddBooking = ({addBooking}) => {
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        checked_in: "",
+    })
+
+    const onChange = (e) =>{
+        const newFormData = Object.assign({}, formData); 
+        newFormData[e.target.name] = e.target.value;
+        setFormData(newFormData);
+    }
+    const onSubmit = (e) =>{
+        e.preventDefault();
+        addBooking(formData)
+        // Reset the form input Values
+        setFormData({
+            name: "",
+            email: "",
+            checked_in: "",  
+        });
+    }
+    
     return ( 
+        <form onSubmit={onSubmit} id="bookings-form" >
+        <h2>Add a Booking</h2>
+        <div className="formWrap">
+            <label htmlFor="name">Name:</label>
+            <input 
+                onChange={onChange} 
+                type="text" 
+                id="name" 
+                name="name"
+                value={formData.name} />
+        </div>
+        <div className="formWrap">
+                <label htmlFor="email">Email:</label>
+                <input 
+                    onChange={onChange} 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    value={formData.email} />
+            </div>
+            <div className="formWrap">
+                <label htmlFor="checked_in">Checked In:</label>
+                <input 
+                    onChange={onChange} 
+                    type="text" 
+                    id="checked_in" 
+                    name="checked_in" 
+                    value={formData.checked_in}/>
+            </div>
 
-        <h3>AddBooking</h3>
+            <input type="submit" value="Save" id="save"/>
+	    </form>
      );
 }
  
